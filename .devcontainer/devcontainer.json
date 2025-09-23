@@ -1,23 +1,38 @@
 {
 	"name": "VSE - Agile",
-	"build":{
+	"build": {
 		"dockerfile": "Dockerfile"
 	},
 	"postCreateCommand": "yarn install",
-	"customizations": {
-	  "vscode": {
-		"settings": {
-		  "terminal.integrated.defaultProfile.linux": "bash"
+	"forwardPorts": [3000, 4000],
+	"portsAttributes": {
+		"3000": {
+			"label": "Frontend (Vite)",
+			"onAutoForward": "openBrowser"
 		},
-		"extensions": [
-		  "github.vscode-pull-request-github",
-		  "ms-azuretools.vscode-docker",
-		  "esbenp.prettier-vscode",
-		  "github.vscode-github-actions",
-		  "bradlc.vscode-tailwindcss",
-		  "openai.chatgpt"
-		]
-	  }
+		"4000": {
+			"label": "Backend (Nest)",
+			"onAutoForward": "notify"
+		}
+	},
+	"containerEnv": {
+		"HOST": "0.0.0.0",
+		"VITE_HOST": "0.0.0.0"
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "bash"
+			},
+			"extensions": [
+				"github.vscode-pull-request-github",
+				"ms-azuretools.vscode-docker",
+				"esbenp.prettier-vscode",
+				"github.vscode-github-actions",
+				"bradlc.vscode-tailwindcss",
+				"openai.chatgpt"
+			]
+		}
 	}
-  }
+}
   

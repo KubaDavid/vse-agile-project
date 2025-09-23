@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     server: {
+      host: env.VITE_HOST || env.HOST || '0.0.0.0',
       port: 3000,
       proxy: { '/uploads': { target: env.VITE_UPLOADS, changeOrigin: true } },
       allowedHosts: env.VITE_ALLOWED_HOSTS
