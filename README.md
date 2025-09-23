@@ -1,1 +1,0 @@
-# vse-agile-project
