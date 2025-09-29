@@ -6,9 +6,10 @@ import { Todo } from '../types';
 type Props = {
   todos: Todo[];
   onToggle: (id: Todo['id']) => void;
-} & Omit<StackProps, 'onToggle'>;
+  onRemove: (id: Todo['id']) => void;
+} & Omit<StackProps, 'onToggle' | 'onRemove'>;
 
-export function TodoList({ todos, onToggle, ...stackProps }: Props) {
+export function TodoList({ todos, onToggle, onRemove, ...stackProps }: Props) {
   return (
     <Box
       borderWidth="1px"
@@ -25,6 +26,7 @@ export function TodoList({ todos, onToggle, ...stackProps }: Props) {
             key={todo.id}
             todo={todo}
             onToggle={onToggle}
+            onRemove={onRemove}
             isLast={index === todos.length - 1}
           />
         ))}

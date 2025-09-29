@@ -1,4 +1,4 @@
-import { Checkbox, Flex, IconButton } from '@chakra-ui/react';
+import { Button, Checkbox, Flex } from '@chakra-ui/react';
 import { FiTrash2 } from 'react-icons/fi';
 
 import type { Todo } from '../types';
@@ -6,10 +6,11 @@ import type { Todo } from '../types';
 type Props = {
   todo: Todo;
   onToggle: (id: Todo['id']) => void;
+  onRemove: (id: Todo['id']) => void;
   isLast: boolean;
 };
 
-export function TodoItem({ todo, onToggle, isLast }: Props) {
+export function TodoItem({ todo, onToggle, onRemove, isLast }: Props) {
   return (
     <Flex
       align="center"
@@ -42,19 +43,17 @@ export function TodoItem({ todo, onToggle, isLast }: Props) {
         </Checkbox.Label>
       </Checkbox.Root>
 
-      <IconButton
-        aria-label="Delete todo"
-        icon={<FiTrash2 />}
-        size="sm"
+      <Button
+        leftIcon={<FiTrash2 />}
         colorScheme="red"
-        borderRadius="full"
-        opacity={0}
-        transform="scale(0.95)"
-        transition="all 0.2s ease"
-        pointerEvents="none"
-        _groupHover={{ opacity: 1, transform: 'scale(1)' }}
         variant="solid"
-      />
+        size="sm"
+        borderRadius="md"
+        onClick={() => onRemove(todo.id)}
+        data-testid="todo-delete"
+      >
+        Delete
+      </Button>
     </Flex>
   );
 }
