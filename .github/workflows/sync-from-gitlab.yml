@@ -29,7 +29,7 @@ jobs:
           fetch-depth: 0
 
       - name: Add GitLab remote
-        run: git remote add gitlab https://gitlab.com/your-group/your-project.git
+        run: git remote add gitlab https://gitlab.com/4it5801-public/quacker.git
 
       - name: Fetch specified GitLab branch
         run: git fetch gitlab $GITLAB_BRANCH
