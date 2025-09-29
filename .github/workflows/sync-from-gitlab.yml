@@ -1,0 +1,40 @@
+name: Sync From GitLab
+
+on:
+  workflow_dispatch:
+    inputs:
+      gitlab_branch:
+        description: GitLab branch name to sync from
+        required: true
+        default: main
+      github_branch:
+        description: GitHub branch name to update
+        required: true
+        default: main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      GITLAB_BRANCH: ${{ inputs.gitlab_branch }}
+      GITHUB_BRANCH: ${{ inputs.github_branch }}
+    steps:
+      - name: Check out GitHub repo branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.GITHUB_BRANCH }}
+          fetch-depth: 0
+
+      - name: Add GitLab remote
+        run: git remote add gitlab https://gitlab.com/4it5801-public/quacker.git
+
+      - name: Fetch specified GitLab branch
+        run: git fetch gitlab $GITLAB_BRANCH
+
+      - name: Reset GitHub branch to GitLab branch state
+        run: git reset --hard gitlab/$GITLAB_BRANCH
+
+      - name: Push updated branch to GitHub
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: git push origin HEAD:$GITHUB_BRANCH --force-with-lease
